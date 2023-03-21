@@ -11,7 +11,7 @@ import SwiftUI
 struct MovieHubApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DashboardPageView()
         }
     }
 }
