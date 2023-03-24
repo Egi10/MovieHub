@@ -15,10 +15,9 @@ class HomeViewModel: ObservableObject {
     private let getPopularMovieUseCase: GetPopularMovieUseCase
     private let getTopRatedMovieUseCase: GetTopRatedMovieUseCase
     
-    init() {
-        let dependencies = AppDependencies.shared
-        self.getPopularMovieUseCase = dependencies.getPopularMovieUseCase
-        self.getTopRatedMovieUseCase = dependencies.getTopRatedMovieUseCase
+    init(getPopularMovieUseCase: GetPopularMovieUseCase, getTopRatedMovieUseCase: GetTopRatedMovieUseCase) {
+        self.getPopularMovieUseCase = getPopularMovieUseCase
+        self.getTopRatedMovieUseCase = getTopRatedMovieUseCase
     }
     
     func getPopularMovie() {

@@ -9,13 +9,17 @@ import SwiftUI
 
 struct DashboardPageView: View {
     var body: some View {
+        let dependencies = AppDependencies.shared
+        
         TabView {
             HomePageView()
+                .environmentObject(dependencies.homeViewModel)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
             
             FavoritePageView()
+                .environmentObject(dependencies.favoriteViewModel)
                 .tabItem {
                     Label("Favorite", systemImage: "heart")
                 }

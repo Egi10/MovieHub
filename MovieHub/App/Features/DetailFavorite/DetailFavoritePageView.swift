@@ -9,7 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct DetailFavoritePageView: View {
-    @ObservedObject var viewModel = DetailFavoriteViewModel()
+    @EnvironmentObject var viewModel: DetailFavoriteViewModel
     
     @State private var showNavigationBar = true
     @State private var showToast = false
@@ -137,5 +137,6 @@ struct DetailFavoritePageView: View {
 struct DetailFavoritePageView_Previews: PreviewProvider {
     static var previews: some View {
         DetailFavoritePageView(idMovie: 238, name: "The Godfather")
+            .environmentObject(AppDependencies.shared.detailFavoriteViewModel)
     }
 }

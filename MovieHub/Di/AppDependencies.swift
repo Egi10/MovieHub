@@ -12,14 +12,11 @@ import RealmSwift
 class AppDependencies {
     static let shared = AppDependencies()
     
-    let getPopularMovieUseCase: GetPopularMovieUseCase
-    let getTopRatedMovieUseCase: GetTopRatedMovieUseCase
-    let getDetailMovieUseCase: GetDetailMovieUseCase
-    // Favorite
-    let getFavoriteMovieUseCase: GetFavoriteMovieUseCase
-    let getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase
-    let addFavoriteMovieUseCase: AddFavoriteMovieUseCase
-    let deleteFavoriteMovieByIdUseCase: DeleteFavoriteMovieByIdUseCase
+    // ViewModel
+    let detailMovieViewModel: DetailMovieViewModel
+    let detailFavoriteViewModel: DetailFavoriteViewModel
+    let favoriteViewModel: FavoriteViewModel
+    let homeViewModel: HomeViewModel
     
     private init() {
         let container = Container()
@@ -75,12 +72,42 @@ class AppDependencies {
             return DefaultDeleteFavoriteMovieByIdUseCase(repository: r.resolve(MovieRepositoryProtocol.self)!)
         }
         
-        self.getPopularMovieUseCase = container.resolve(GetPopularMovieUseCase.self)!
-        self.getTopRatedMovieUseCase = container.resolve(GetTopRatedMovieUseCase.self)!
-        self.getDetailMovieUseCase = container.resolve(GetDetailMovieUseCase.self)!
-        self.getFavoriteMovieUseCase = container.resolve(GetFavoriteMovieUseCase.self)!
-        self.getFavoriteMovieByIdUseCase = container.resolve(GetFavoriteMovieByIdUseCase.self)!
-        self.addFavoriteMovieUseCase = container.resolve(AddFavoriteMovieUseCase.self)!
-        self.deleteFavoriteMovieByIdUseCase = container.resolve(DeleteFavoriteMovieByIdUseCase.self)!
+        // ViewModel
+        container.register(DetailMovieViewModel.self) { r in
+            DetailMovieViewModel(
+                getDetailMovieUseCase: r.resolve(GetDetailMovieUseCase.self)!,
+                getFavoriteMovieByIdUseCase: r.resolve(GetFavoriteMovieByIdUseCase.self)!,
+                addFavoriteMovieUseCase: r.resolve(AddFavoriteMovieUseCase.self)!,
+                deleteFavoriteMovieByIdUseCase: r.resolve(DeleteFavoriteMovieByIdUseCase.self)!
+            )
+        }
+        .inObjectScope(.container)
+        
+        container.register(DetailFavoriteViewModel.self) { r in
+            DetailFavoriteViewModel(
+                getFavoriteMovieByIdUseCase: r.resolve(GetFavoriteMovieByIdUseCase.self)!,
+                deleteFavoriteMovieByIdUseCase: r.resolve(DeleteFavoriteMovieByIdUseCase.self)!,
+                addFavoriteMovieUseCase: r.resolve(AddFavoriteMovieUseCase.self)!
+            )
+        }
+        
+        container.register(FavoriteViewModel.self) { r in
+            FavoriteViewModel(
+                getFavoriteMovieUseCase: r.resolve(GetFavoriteMovieUseCase.self)!
+            )
+        }
+        
+        container.register(HomeViewModel.self) { r in
+            HomeViewModel(
+                getPopularMovieUseCase: r.resolve(GetPopularMovieUseCase.self)!,
+                getTopRatedMovieUseCase: r.resolve(GetTopRatedMovieUseCase.self)!
+            )
+        }
+        
+        // View Model
+        self.detailMovieViewModel = container.resolve(DetailMovieViewModel.self)!
+        self.detailFavoriteViewModel = container.resolve(DetailFavoriteViewModel.self)!
+        self.favoriteViewModel = container.resolve(FavoriteViewModel.self)!
+        self.homeViewModel = container.resolve(HomeViewModel.self)!
     }
 }

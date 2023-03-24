@@ -17,11 +17,14 @@ class DetailFavoriteViewModel: ObservableObject {
     private let deleteFavoriteMovieByIdUseCase: DeleteFavoriteMovieByIdUseCase
     private let addFavoriteMovieUseCase: AddFavoriteMovieUseCase
     
-    init() {
-        let dependencies = AppDependencies.shared
-        self.getFavoriteMovieByIdUseCase = dependencies.getFavoriteMovieByIdUseCase
-        self.deleteFavoriteMovieByIdUseCase = dependencies.deleteFavoriteMovieByIdUseCase
-        self.addFavoriteMovieUseCase = dependencies.addFavoriteMovieUseCase
+    init(
+        getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase,
+        deleteFavoriteMovieByIdUseCase: DeleteFavoriteMovieByIdUseCase,
+        addFavoriteMovieUseCase: AddFavoriteMovieUseCase
+    ) {
+        self.getFavoriteMovieByIdUseCase = getFavoriteMovieByIdUseCase
+        self.deleteFavoriteMovieByIdUseCase = deleteFavoriteMovieByIdUseCase
+        self.addFavoriteMovieUseCase = addFavoriteMovieUseCase
     }
     
     func getFavoriteById(from idMovie: Int) {

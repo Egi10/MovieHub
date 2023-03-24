@@ -11,6 +11,7 @@ import Combine
 class DetailMovieViewModel: ObservableObject {
     @Published var detail: ViewState<DetailMovie> = .initiate
     @Published var isFavorite: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
     
     private let getDetailMovieUseCase: GetDetailMovieUseCase
@@ -18,12 +19,16 @@ class DetailMovieViewModel: ObservableObject {
     private let addFavoriteMovieUseCase: AddFavoriteMovieUseCase
     private let deleteFavoriteMovieByIdUseCase: DeleteFavoriteMovieByIdUseCase
     
-    init() {
-        let dependencies = AppDependencies.shared
-        self.getDetailMovieUseCase = dependencies.getDetailMovieUseCase
-        self.getFavoriteMovieByIdUseCase = dependencies.getFavoriteMovieByIdUseCase
-        self.addFavoriteMovieUseCase = dependencies.addFavoriteMovieUseCase
-        self.deleteFavoriteMovieByIdUseCase = dependencies.deleteFavoriteMovieByIdUseCase
+    init(
+        getDetailMovieUseCase: GetDetailMovieUseCase,
+        getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase,
+        addFavoriteMovieUseCase: AddFavoriteMovieUseCase,
+        deleteFavoriteMovieByIdUseCase: DeleteFavoriteMovieByIdUseCase
+    ) {
+        self.getDetailMovieUseCase = getDetailMovieUseCase
+        self.getFavoriteMovieByIdUseCase = getFavoriteMovieByIdUseCase
+        self.addFavoriteMovieUseCase = addFavoriteMovieUseCase
+        self.deleteFavoriteMovieByIdUseCase = deleteFavoriteMovieByIdUseCase
     }
     
     func getDetailMovie(idMovie: Int) {

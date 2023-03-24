@@ -14,9 +14,8 @@ class FavoriteViewModel: ObservableObject {
     
     private let getFavoriteMovieUseCase: GetFavoriteMovieUseCase
     
-    init() {
-        let dependencies = AppDependencies.shared
-        self.getFavoriteMovieUseCase = dependencies.getFavoriteMovieUseCase
+    init(getFavoriteMovieUseCase: GetFavoriteMovieUseCase) {
+        self.getFavoriteMovieUseCase = getFavoriteMovieUseCase
     }
     
     func getFavoriteMovie() {
@@ -30,7 +29,11 @@ class FavoriteViewModel: ObservableObject {
                     self.favorite = .error(error: error)
                 }
             } receiveValue: { value in
-                self.favorite = .success(data: value)
+                if value.isEmpty {
+                    self.favorite = .empty
+                } else {
+                    self.favorite = .success(data: value)
+                }
             }.store(in: &cancellables)
     }
 }

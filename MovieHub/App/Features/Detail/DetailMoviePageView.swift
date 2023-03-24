@@ -9,7 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct DetailMoviePageView: View {
-    @ObservedObject var viewModel = DetailMovieViewModel()
+    @EnvironmentObject var viewModel: DetailMovieViewModel
     
     @State private var showNavigationBar = true
     
@@ -128,6 +128,9 @@ struct DetailMoviePageView: View {
 
 struct DetailMoviePageView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailMoviePageView(idMovie: 238, name: "The Godfather")
+        DetailMoviePageView(
+            idMovie: 238,
+            name: "The Godfather"
+        ).environmentObject(AppDependencies.shared.detailMovieViewModel)
     }
 }

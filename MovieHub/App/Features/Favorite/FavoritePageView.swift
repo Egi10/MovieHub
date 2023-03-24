@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoritePageView: View {
-    @ObservedObject var viewModel = FavoriteViewModel()
+    @EnvironmentObject var viewModel: FavoriteViewModel
     
     private var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
     
@@ -31,10 +31,14 @@ struct FavoritePageView: View {
                         LazyVGrid(columns: gridItemLayout) {
                             ForEach(data, id: \.self) { movie in
                                 NavigationLink {
+                                    let dependencies = AppDependencies.shared
+                                    
                                     DetailFavoritePageView(
                                         idMovie: movie.id,
                                         name: movie.title
                                     )
+                                    .environmentObject(dependencies.detailFavoriteViewModel)
+                                    .toolbar(.hidden, for: .tabBar)
                                 } label: {
                                     MovieFavoriteItemView(
                                         image: movie.image,
@@ -49,6 +53,7 @@ struct FavoritePageView: View {
                     }
                 } else if case .empty = viewModel.favorite {
                     Text("Empty")
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 } else if case .error = viewModel.favorite {
                     Text("Ops, There is an error")
                 }
@@ -64,5 +69,6 @@ struct FavoritePageView: View {
 struct FavoritePageView_Previews: PreviewProvider {
     static var previews: some View {
         FavoritePageView()
+            .environmentObject(AppDependencies.shared.favoriteViewModel)
     }
 }

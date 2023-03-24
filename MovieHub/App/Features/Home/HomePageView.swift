@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HomePageView: View {
-    @ObservedObject var viewModel = HomeViewModel()
+    let dependencies = AppDependencies.shared
+    
+    @EnvironmentObject var viewModel: HomeViewModel
     
     var body: some View {
         NavigationStack {
@@ -32,6 +34,7 @@ struct HomePageView: View {
                                 ForEach(data.topRatedMovie, id: \.id) { topRated in
                                     NavigationLink {
                                         DetailMoviePageView(idMovie: topRated.id, name: topRated.title)
+                                            .environmentObject(dependencies.detailMovieViewModel)
                                             .toolbar(.hidden, for: .tabBar)
                                     } label: {
                                         TopRatedItemView(
@@ -64,6 +67,7 @@ struct HomePageView: View {
                             ForEach(data.popularMovie, id: \.id) { popular in
                                 NavigationLink {
                                     DetailMoviePageView(idMovie: popular.id, name: popular.title)
+                                        .environmentObject(dependencies.detailMovieViewModel)
                                         .toolbar(.hidden, for: .tabBar)
                                 } label: {
                                     PopularItemView(
@@ -89,5 +93,6 @@ struct HomePageView: View {
 struct HomePageView_Previews: PreviewProvider {
     static var previews: some View {
         HomePageView()
+            .environmentObject(AppDependencies.shared.homeViewModel)
     }
 }
