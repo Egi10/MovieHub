@@ -12,8 +12,10 @@ workflows:
         script: |
           xcodebuild -workspace MovieHub.xcworkspace -scheme MovieHub -configuration Release -archivePath $HOME/build/MovieHub.xcarchive archive
           xcodebuild -exportArchive -archivePath $HOME/build/MovieHub.xcarchive -exportPath $HOME/build/MovieHub.ipa -exportOptionsPlist ExportOptions.plist
+          -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max,OS=16.2' \
+          clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     artifacts:
-      - build/MovieHub.ipa
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
     publishing:
       email:
         recipients:
