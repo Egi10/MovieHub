@@ -10,10 +10,10 @@ workflows:
           pod install
       - name: Build iOS app
         script: |
-          xcodebuild -workspace MyApp.xcworkspace -scheme MyApp -configuration Release -archivePath $HOME/build/MyApp.xcarchive archive
-          xcodebuild -exportArchive -archivePath $HOME/build/MyApp.xcarchive -exportPath $HOME/build/MyApp.ipa -exportOptionsPlist ExportOptions.plist
+          xcodebuild -workspace MovieHub.xcworkspace -scheme MovieHub -configuration Release -archivePath $HOME/build/MovieHub.xcarchive archive
+          xcodebuild -exportArchive -archivePath $HOME/build/MovieHub.xcarchive -exportPath $HOME/build/MovieHub.ipa -exportOptionsPlist ExportOptions.plist
     artifacts:
-      - build/MyApp.ipa
+      - build/MovieHub.ipa
     publishing:
       email:
         recipients:
