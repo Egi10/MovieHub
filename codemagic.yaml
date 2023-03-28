@@ -1,29 +1,23 @@
 workflows:
-  ios-project-debug: # workflow ID
-    name: iOS debug # workflow name
+  build-and-deploy:
+    name: Build and Deploy
     environment:
       xcode: latest
-      cocoapods: default
-      vars:
-          XCODE_PROJECT: "MovieHub.xcodeproj" # Isikan nama project Anda.
-          XCODE_SCHEME: "MovieHub" # Isikan nama scheme project Anda.
     scripts:
-      - name: Run tests
+      - name: Install CocoaPods dependencies
         script: |
-          xcodebuild \
-          -project "$XCODE_PROJECT" \
-          -scheme "$XCODE_SCHEME" \
-          -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2' \
-          clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-      - name: Build debug app
+          cd ios
+          pod install
+      - name: Build iOS app
         script: |
-          xcodebuild build -project "$XCODE_PROJECT" \
-          -scheme "$XCODE_SCHEME" \
-          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          flutter build ios --release --no-codesign
     artifacts:
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - build/ios/ipa/*.ipa
     publishing:
       email:
         recipients:
-          - egifcb@gmail.com # Isikan email untuk notifikasi status building.
+          - user@example.com
+        subject: Your app is ready!
+        body: |
+          Your app has been successfully built and deployed to CodeMagic.
+          You can download the IPA file from the following link: $LINK
