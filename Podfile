@@ -11,13 +11,13 @@ target 'MovieHub' do
 
   # Pods for MovieHub
 
-#  target 'MovieHubTests' do
-#    inherit! :search_paths
-#    # Pods for testing
-#  end
-#
-#  target 'MovieHubUITests' do
-#    # Pods for testing
-#  end
+  target 'MovieHubTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'MovieHubUITests' do
+    # Pods for testing
+  end
 
 end
