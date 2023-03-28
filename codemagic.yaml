@@ -10,13 +10,14 @@ workflows:
           pod install
       - name: Build iOS app
         script: |
-          flutter build ios --release --no-codesign
+          xcodebuild -workspace MyApp.xcworkspace -scheme MyApp -configuration Release -archivePath $HOME/build/MyApp.xcarchive archive
+          xcodebuild -exportArchive -archivePath $HOME/build/MyApp.xcarchive -exportPath $HOME/build/MyApp.ipa -exportOptionsPlist ExportOptions.plist
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/MyApp.ipa
     publishing:
       email:
         recipients:
-          - user@example.com
+          - egifcb@gmail.com
         subject: Your app is ready!
         body: |
           Your app has been successfully built and deployed to CodeMagic.
