@@ -3,6 +3,10 @@ workflows:
     name: Build and Deploy
     environment:
       xcode: latest
+      cocoapods: default
+      vars:
+          XCODE_PROJECT: "MovieHub.xcodeproj" # Isikan nama project Anda.
+          XCODE_SCHEME: "MovieHub" # Isikan nama scheme project Anda.
     scripts:
       - name: Install CocoaPods dependencies
         script: |
