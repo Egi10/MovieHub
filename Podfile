@@ -16,7 +16,7 @@ target 'MovieHub' do
   end
 
   target 'MovieHubUITests' do
-    # Pods for testing
+    pod 'Alamofire'
   end
 
 end
