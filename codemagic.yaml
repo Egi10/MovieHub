@@ -18,7 +18,3 @@ workflows:
       email:
         recipients:
           - egifcb@gmail.com
-        subject: Your app is ready!
-        body: |
-          Your app has been successfully built and deployed to CodeMagic.
-          You can download the IPA file from the following link: $LINK
