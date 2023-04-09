@@ -13,7 +13,7 @@ workflows:
           gem install cocoapods
       - name: Pod Install
         script: |
-          pod install --project-directory=MovieHub
+          pod install
       - name: Run tests
         script: |
           xcodebuild \
