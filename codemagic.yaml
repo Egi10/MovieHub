@@ -10,8 +10,10 @@ workflows:
     scripts:
       - name: Install CocoaPods dependencies
         script: |
-          cd ios
-          pod install
+          gem install cocoapods
+      - name: Pod Install
+        script: |
+          pod install --project-directory=MovieHub
       - name: Run tests
         script: |
           xcodebuild \
